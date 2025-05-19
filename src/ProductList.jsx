@@ -266,6 +266,10 @@ function ProductList({ onHomeClick }) {
   }));
 };
 
+const calculateTotalQuantity = () => {
+ return CartItems ? CartItems.reduce((total, item) => total + item.quantity, 0) : 0;
+  };
+
     return (
         <div>
             <div className="navbar" style={styleObj}>
@@ -307,10 +311,16 @@ function ProductList({ onHomeClick }) {
           <div className="product-cost">${plant.cost}</div> {/* Display plant cost */}
           <button
             className="product-button"
-            onClick={() => handleAddToCart(plant)} // Handle adding plant to cart
-          >
-            Add to Cart
-          </button>
+            onClick={() => handleAddToCart(plant)}
+            disabled={addedToCart[plant.name]}
+            style={{
+            backgroundColor: addedToCart[plant.name] ? '#ccc' : '#28a745',
+            color: 'white',
+            cursor: addedToCart[plant.name] ? 'not-allowed' : 'pointer'
+            }}
+>
+            {addedToCart[plant.name] ? 'Added to cart' : 'Add to Cart'}
+        </button>
         </div>
       ))}
     </div>
